@@ -53,15 +53,43 @@ class Apple(GameObject):
     def __init__(self):
         super().__init__()
         self.body_color = APPLE_COLOR
-    
+        self.randomize_position()
+
     def draw(self):
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, self.body_color, rect)
         pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
+    def randomize_position(self):
+        self.position = (
+            randint(0, GRID_WIDTH) * GRID_SIZE,
+            randint(0, GRID_HEIGHT) * GRID_SIZE
+        )
+
 
 class Snake(GameObject):
-    pass
+    def __init__(self):
+        super().__init__()
+        self.length = 1
+        self.direction = RIGHT
+        self.next_direction = None
+        self.body_color = SNAKE_COLOR
+        self.positions = [(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)]
+    
+    def draw(self):
+        for position in self.positions[:-1]:
+            rect = (pygame.Rect(position, (GRID_SIZE, GRID_SIZE)))
+            pygame.draw.rect(screen, self.body_color, rect)
+            pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
+        # Отрисовка головы змейки
+        head_rect = pygame.Rect(self.positions[0], (GRID_SIZE, GRID_SIZE))
+        pygame.draw.rect(screen, self.body_color, head_rect)
+        pygame.draw.rect(screen, BORDER_COLOR, head_rect, 1)
+
+#     # Затирание последнего сегмента
+        if self.last:
+            last_rect = pygame.Rect(self.last, (GRID_SIZE, GRID_SIZE))
+            pygame.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
 
 
 # Функция обработки действий пользователя
@@ -86,10 +114,12 @@ def main():
     pygame.init()
     # Тут нужно создать экземпляры классов.
     apple = Apple()
+    snake = Snake()
 
     while True:
         clock.tick(SPEED)
         handle_keys(apple)
+        snake.draw()
         apple.draw()
         pygame.display.update()
 
