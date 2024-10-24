@@ -89,7 +89,7 @@ class Snake(GameObject):
     """A class representing a snake on the playing field."""
 
     def __init__(self):
-        """ Initializing a snake with the original length,
+        """Initializing a snake with the original length,
         position, color and direction.
         """
         super().__init__()
