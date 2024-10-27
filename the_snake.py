@@ -61,7 +61,7 @@ class GameObject:
 
     def __init__(self, body_color=None):
         """Initializing an object with basic attributes."""
-        self.position = (CENTER_COORDINATES)
+        self.position = CENTER_COORDINATES
         self.body_color = body_color
 
     def draw(self):
@@ -84,7 +84,7 @@ class Apple(GameObject):
     def __init__(self, occupied_cells=None):
         """Initializing an apple with a given color and a random position."""
         super().__init__(APPLE_COLOR)
-        self.randomize_position(occupied_cells=None)
+        self.randomize_position(occupied_cells)
 
     def draw(self):
         """Draws an apple on the screen."""
@@ -108,11 +108,7 @@ class Snake(GameObject):
         position, color and direction.
         """
         super().__init__(SNAKE_COLOR)
-        self.length = 1
-        self.positions = [CENTER_COORDINATES]
-        self.direction = RIGHT
-        self.next_direction = None
-        self.last = None
+        self.reset()
 
     def draw(self):
         """Drawing a snake on the screen."""
@@ -154,6 +150,7 @@ class Snake(GameObject):
         self.positions = [CENTER_COORDINATES]
         self.direction = choice(DIRECTIONS)
         self.next_direction = None
+        self.last = None
 
 
 # Функция обработки действий пользователя
